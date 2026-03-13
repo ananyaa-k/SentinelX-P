@@ -1,0 +1,209 @@
+{
+  "identity": {
+    "name": "SentinelX Defender",
+    "theme_mode": "light",
+    "aesthetic": "Technical Minimalist",
+    "core_concept": "Paper & Ink Dashboard",
+    "emotional_tone": "Precise, Authoritative, Clear, Clinical",
+    "design_principles": [
+      "Zero-Shadow Policy: Depth is created by borders and contrast, not shadows",
+      "Data Density: High density information displayed with Swiss-style clarity",
+      "Structural Integrity: Visible grids, corner markers, and defined boundaries",
+      "Tactile Flatness: Elements feel like printed ink on high-quality paper"
+    ]
+  },
+  "typography": {
+    "fonts": {
+      "headings": {
+        "family": "Space Grotesk, sans-serif",
+        "weights": ["600", "700"],
+        "usage": "Page titles, Section headers, KPI values",
+        "letter_spacing": "-0.02em"
+      },
+      "body": {
+        "family": "General Sans, sans-serif",
+        "weights": ["400", "500", "600"],
+        "usage": "General text, descriptions, form labels",
+        "letter_spacing": "normal"
+      },
+      "technical": {
+        "family": "JetBrains Mono, monospace",
+        "weights": ["400", "500"],
+        "usage": "Code blocks, File paths, Hashes, System status, Data values",
+        "letter_spacing": "normal"
+      }
+    },
+    "scale": {
+      "h1": "text-4xl md:text-5xl font-bold tracking-tight",
+      "h2": "text-3xl font-semibold tracking-tight",
+      "h3": "text-2xl font-semibold tracking-tight",
+      "body": "text-base leading-relaxed",
+      "small": "text-sm text-muted-foreground",
+      "mono": "text-xs or text-sm font-mono"
+    }
+  },
+  "colors": {
+    "palette": {
+      "background": {
+        "primary": "#F7F7F5",
+        "secondary": "#EBEBE8",
+        "surface": "#FFFFFF"
+      },
+      "brand": {
+        "primary": "#1A3C2B",
+        "primary_foreground": "#FFFFFF",
+        "secondary": "#2C4E3D"
+      },
+      "accents": {
+        "coral": "#FF8C69",
+        "mint": "#9EFFBF",
+        "gold": "#F4D35E"
+      },
+      "neutral": {
+        "text_primary": "#1A1A18",
+        "text_secondary": "#5A5A58",
+        "border": "rgba(58, 58, 56, 0.2)",
+        "hairline": "#3A3A38"
+      },
+      "semantic": {
+        "success": "#1A3C2B",
+        "warning": "#F4D35E",
+        "error": "#FF8C69",
+        "info": "#3A3A38"
+      }
+    },
+    "usage_rules": {
+      "gradients": "FORBIDDEN",
+      "shadows": "FORBIDDEN",
+      "transparency": "Use only for glass/blur effects or borders. No fully transparent content backgrounds."
+    }
+  },
+  "layout": {
+    "grid_system": {
+      "type": "Bento Grid",
+      "gap": "gap-4 md:gap-6",
+      "columns": "grid-cols-1 md:grid-cols-12",
+      "container_padding": "p-6 md:p-8 lg:p-12"
+    },
+    "spacing": {
+      "standard": "scale-125 (e.g., p-5 instead of p-4)",
+      "section_gap": "py-12 or py-16",
+      "component_padding": "px-4 py-3"
+    },
+    "mosaic_pattern": {
+      "description": "Interlocking rectangular panels",
+      "implementation": "Use borders to define the grid. Some cells can be empty to create negative space."
+    }
+  },
+  "components": {
+    "overrides": [
+      {
+        "component": "Card",
+        "style": "rounded-[0px] or rounded-[2px] border border-border bg-white shadow-none hover:border-primary/50 transition-colors duration-200"
+      },
+      {
+        "component": "Button",
+        "style": "rounded-[2px] font-medium shadow-none hover:translate-y-[1px] active:translate-y-[2px] transition-transform"
+      },
+      {
+        "component": "Input",
+        "style": "rounded-[0px] border-border bg-transparent shadow-none focus-visible:ring-1 focus-visible:ring-primary"
+      },
+      {
+        "component": "Badge",
+        "style": "rounded-[2px] font-mono uppercase tracking-wider text-[10px] px-2 py-0.5"
+      }
+    ],
+    "visual_enhancers": {
+      "corner_markers": "Add absolute positioned 4px x 4px squares or 'L' shapes at corners of key containers (color: primary or accent)",
+      "square_dots": "Use 4px x 4px filled squares for status indicators instead of circles",
+      "image_treatment": "mix-blend-luminosity opacity-90 hover:mix-blend-normal transition-all duration-500 grayscale hover:grayscale-0",
+      "dividers": "1px solid border-color with 20% opacity"
+    }
+  },
+  "pages": {
+    "dashboard": {
+      "path": "/",
+      "elements": [
+        "Mission Briefing Header (Typographic focus)",
+        "System Status Grid (Bento layout, 4-6 cards)",
+        "Recent Threats Table (Minimalist rows)",
+        "Quick Action CTAs (Large, blocky buttons)"
+      ]
+    },
+    "scanner": {
+      "path": "/scanner",
+      "elements": [
+        "File Upload Zone (Dashed border, mono text)",
+        "Feature Vector Form (20 inputs, 4 columns grid)",
+        "Analysis Results Panel (Slide-in or below, detailed breakdown)",
+        "Confidence Gauge (Semi-circle or linear bar, no gradients)"
+      ]
+    },
+    "benchmark": {
+      "path": "/benchmark",
+      "elements": [
+        "Comparison Charts (Line/Bar charts using Recharts, monochromatic with accents)",
+        "Metrics Table (High density, sticky header)",
+        "Performance Indicators (Big number cards)"
+      ]
+    },
+    "dataset": {
+      "path": "/dataset",
+      "elements": [
+        "Sample Explorer (Grid of data points)",
+        "Distribution Charts (Histogram/Pie)",
+        "Filter/Search Bar (Top aligned, full width)"
+      ]
+    },
+    "model": {
+      "path": "/model",
+      "elements": [
+        "Architecture Diagram (SVG/Canvas based, node-link style)",
+        "Feature Importance List (Horizontal bars)",
+        "Training History Log (Terminal style text)"
+      ]
+    },
+    "admin_login": {
+      "path": "/admin/login",
+      "elements": [
+        "Centered Card (Sharp corners)",
+        "Minimalist Form",
+        "Brand Logo (SVG)"
+      ]
+    }
+  },
+  "assets": {
+    "icons": "Lucide React (Stroke width 1.5px or 1px for elegance)",
+    "images": {
+      "usage": "Minimal usage. Mostly for abstract data representations or user avatars.",
+      "style": "Black and white or duotone (Green/White) treatment."
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure text is #1A3C2B or #3A3A38 on #F7F7F5 background for WCAG AAA.",
+    "focus_states": "Visible 2px offset rings in Primary color.",
+    "reduced_motion": "Respect system settings."
+  },
+  "tech_stack": {
+    "frontend": "React, Tailwind CSS, Shadcn UI, Recharts, Framer Motion",
+    "backend": "FastAPI (localhost:8000)",
+    "icons": "lucide-react"
+  },
+  "instructions_to_main_agent": [
+    "INSTALL FONTS: Add '@fontsource/space-grotesk', '@fontsource/jetbrains-mono', and '@fontsource/general-sans' (if available, else use Google Fonts via CSS).",
+    "CONFIGURE TAILWIND: Update `tailwind.config.js` with the specific colors and border radius (0px or 2px).",
+    "GLOBAL CSS: Remove all default rounded corners if global radius variable exists.",
+    "NO SHADOWS: Override any default shadcn shadow classes.",
+    "BENTO GRIDS: Use `grid-cols-12` for main layouts and span items creatively (4, 8, 6).",
+    "TEST IDS: Add `data-testid` to all interactive elements.",
+    "MOCK DATA: Use realistic cybersecurity terminology (e.g., 'Ransomware.Win32', 'High Heuristic Score', 'Payload Analysis').",
+    "ADMIN AUTH: Mock the login flow (accept any valid email/pass or specific hardcoded one for demo)."
+  ],
+  "universal_guidelines": [
+    "Avoid 'AI Slop': No generic centered layouts, no gradients, no rounded buttons.",
+    "Micro-interactions: Hover states on table rows (bg-primary/5), buttons (transform), inputs (border color).",
+    "Spacing: Use whitespace as a separator instead of lines where possible.",
+    "Consistency: Maintain the 'Technical Minimalist' aesthetic across all pages."
+  ]
+}
