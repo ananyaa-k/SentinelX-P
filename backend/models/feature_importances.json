@@ -1,0 +1,22 @@
+{
+  "num_strings": 0.6805883837660763,
+  "num_imports": 0.1934337010329572,
+  "suspicious_string_count": 0.031721458374456675,
+  "num_exports": 0.024607163823473322,
+  "num_sections": 0.023912748712162413,
+  "suspicious_import_count": 0.014558676140814393,
+  "file_entropy": 0.007816951891864786,
+  "network_indicators": 0.00703075941507464,
+  "registry_indicators": 0.00643445883491675,
+  "anti_debug_calls": 0.005830077178128261,
+  "pe_timestamp_anomaly": 0.001625677103122092,
+  "file_size_kb": 0.0012295639048235522,
+  "resource_entropy": 0.0007059186421652749,
+  "section_entropy_avg": 0.0003760808423271283,
+  "high_entropy_sections": 0.0001283803376370925,
+  "import_entropy": 1.7024953730195468e-16,
+  "overlay_ratio": 0.0,
+  "has_packing_artifacts": 0.0,
+  "has_debug_info": 0.0,
+  "has_upx_signature": 0.0
+}

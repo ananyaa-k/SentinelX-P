@@ -30,9 +30,9 @@ const Benchmark: React.FC = () => {
       } catch (error) {
         // Use default benchmark data if API fails
         setResults({
-          yara_only: { accuracy: 0.68, precision: 0.92, recall: 0.5333, f1: 0.675, fpr: 0.04, fnr: 0.4667, auc: 0.7467 },
-          basic_ml: { accuracy: 0.7867, precision: 0.85, recall: 0.7556, f1: 0.8, fpr: 0.16, fnr: 0.2444, auc: 0.7978 },
-          sentinelx: { accuracy: 0.92, precision: 0.94, recall: 0.9778, f1: 0.9585, fpr: 0.14, fnr: 0.0222, auc: 0.9189 },
+          yara_only: { accuracy: 68.0, precision: 92.0, recall: 53.33, f1: 67.5, fpr: 4.0, fnr: 46.67, auc: null } as any,
+          basic_ml: { accuracy: 78.67, precision: 85.0, recall: 75.56, f1: 80.0, fpr: 16.0, fnr: 24.44, auc: 0.7978 },
+          sentinelx: { accuracy: 92.0, precision: 94.0, recall: 97.78, f1: 95.85, fpr: 14.0, fnr: 2.22, auc: 0.9189 },
           sample_count: 75
         });
       } finally {
@@ -68,22 +68,22 @@ const Benchmark: React.FC = () => {
   }
 
   const chartData = [
-    { metric: 'Accuracy', yara: results.yara_only.accuracy, ml: results.basic_ml.accuracy, sentinelx: results.sentinelx.accuracy },
-    { metric: 'Precision', yara: results.yara_only.precision, ml: results.basic_ml.precision, sentinelx: results.sentinelx.precision },
-    { metric: 'Recall', yara: results.yara_only.recall, ml: results.basic_ml.recall, sentinelx: results.sentinelx.recall },
-    { metric: 'F1 Score', yara: results.yara_only.f1, ml: results.basic_ml.f1, sentinelx: results.sentinelx.f1 },
+    { metric: 'Accuracy', yara: results.yara_only.accuracy / 100, ml: results.basic_ml.accuracy / 100, sentinelx: results.sentinelx.accuracy / 100 },
+    { metric: 'Precision', yara: results.yara_only.precision / 100, ml: results.basic_ml.precision / 100, sentinelx: results.sentinelx.precision / 100 },
+    { metric: 'Recall', yara: results.yara_only.recall / 100, ml: results.basic_ml.recall / 100, sentinelx: results.sentinelx.recall / 100 },
+    { metric: 'F1 Score', yara: results.yara_only.f1 / 100, ml: results.basic_ml.f1 / 100, sentinelx: results.sentinelx.f1 / 100 },
   ];
 
   const scatterData = [
-    { name: 'YARA-Only', fpr: results.yara_only.fpr, fnr: results.yara_only.fnr, color: '#FF8C69' },
-    { name: 'Basic-ML', fpr: results.basic_ml.fpr, fnr: results.basic_ml.fnr, color: '#F4D35E' },
-    { name: 'SentinelX', fpr: results.sentinelx.fpr, fnr: results.sentinelx.fnr, color: '#9EFFBF' },
+    { name: 'YARA-Only', fpr: results.yara_only.fpr / 100, fnr: results.yara_only.fnr / 100, color: '#FF8C69' },
+    { name: 'Basic-ML', fpr: results.basic_ml.fpr / 100, fnr: results.basic_ml.fnr / 100, color: '#F4D35E' },
+    { name: 'SentinelX', fpr: results.sentinelx.fpr / 100, fnr: results.sentinelx.fnr / 100, color: '#9EFFBF' },
   ];
 
   const improvements = [
-    { label: 'Recall Gain over YARA', value: `+${((results.sentinelx.recall - results.yara_only.recall) * 100).toFixed(2)}%`, color: '#9EFFBF' },
-    { label: 'False Negative Reduction', value: `-${((results.yara_only.fnr - results.sentinelx.fnr) * 100).toFixed(2)}%`, color: '#FF8C69' },
-    { label: 'F1-Score Improvement', value: `+${((results.sentinelx.f1 - results.yara_only.f1) * 100).toFixed(2)}%`, color: '#F4D35E' },
+    { label: 'Recall Gain over YARA', value: `+${(results.sentinelx.recall - results.yara_only.recall).toFixed(2)}%`, color: '#9EFFBF' },
+    { label: 'False Negative Reduction', value: `-${(results.yara_only.fnr - results.sentinelx.fnr).toFixed(2)}%`, color: '#FF8C69' },
+    { label: 'F1-Score Improvement', value: `+${(results.sentinelx.f1 - results.yara_only.f1).toFixed(2)}%`, color: '#F4D35E' },
   ];
 
   return (
@@ -180,13 +180,13 @@ const Benchmark: React.FC = () => {
                       <span className="font-mono text-xs">{row.name}</span>
                     </div>
                   </td>
-                  <td className="font-mono text-xs">{(row.data.accuracy * 100).toFixed(2)}%</td>
-                  <td className="font-mono text-xs">{(row.data.precision * 100).toFixed(2)}%</td>
-                  <td className="font-mono text-xs">{(row.data.recall * 100).toFixed(2)}%</td>
-                  <td className="font-mono text-xs">{(row.data.f1 * 100).toFixed(2)}%</td>
-                  <td className="font-mono text-xs">{(row.data.fpr * 100).toFixed(2)}%</td>
-                  <td className="font-mono text-xs">{(row.data.fnr * 100).toFixed(2)}%</td>
-                  <td className="font-mono text-xs">{row.data.auc.toFixed(4)}</td>
+                  <td className="font-mono text-xs">{(row.data.accuracy).toFixed(2)}%</td>
+                  <td className="font-mono text-xs">{(row.data.precision).toFixed(2)}%</td>
+                  <td className="font-mono text-xs">{(row.data.recall).toFixed(2)}%</td>
+                  <td className="font-mono text-xs">{(row.data.f1).toFixed(2)}%</td>
+                  <td className="font-mono text-xs">{(row.data.fpr).toFixed(2)}%</td>
+                  <td className="font-mono text-xs">{(row.data.fnr).toFixed(2)}%</td>
+                  <td className="font-mono text-xs">{row.data.auc ? row.data.auc.toFixed(4) : '-'}</td>
                 </tr>
               ))}
             </tbody>

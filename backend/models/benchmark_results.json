@@ -1,0 +1,52 @@
+{
+  "yara_only": {
+    "accuracy": 73.33,
+    "precision": 100.0,
+    "recall": 52.38,
+    "f1": 68.75,
+    "fpr": 0.0,
+    "fnr": 47.62,
+    "tp": 22,
+    "tn": 33,
+    "fp": 0,
+    "fn": 20
+  },
+  "basic_ml": {
+    "accuracy": 92.0,
+    "precision": 92.86,
+    "recall": 92.86,
+    "f1": 92.86,
+    "fpr": 9.09,
+    "fnr": 7.14,
+    "tp": 39,
+    "tn": 30,
+    "fp": 3,
+    "fn": 3,
+    "auc": 0.9286
+  },
+  "sentinelx": {
+    "accuracy": 98.67,
+    "precision": 97.67,
+    "recall": 100.0,
+    "f1": 98.82,
+    "fpr": 3.03,
+    "fnr": 0.0,
+    "tp": 42,
+    "tn": 32,
+    "fp": 1,
+    "fn": 0,
+    "auc": 0.9827
+  },
+  "dataset_info": {
+    "total_samples": 250,
+    "malware": 150,
+    "benign": 100,
+    "train_size": 175,
+    "test_size": 75,
+    "malware_families": 10,
+    "benign_categories": 10,
+    "packed_malware": 93,
+    "evasive_malware": 33,
+    "features_used": 20
+  }
+}
