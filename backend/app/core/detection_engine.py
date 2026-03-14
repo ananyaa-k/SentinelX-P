@@ -190,8 +190,11 @@ Respond ONLY as JSON:
             data = json.loads(raw)
             return LLMAnalysis(**data)
     except Exception as e:
+        print("GEMINI API EXCEPTION:", e)
         logger.warning(f"Gemini API fallback: {e}")
-        return await _llm_analyze.__wrapped__(features, behavioral_flags)  # fallback
+        settings.gemini_api_key = ""
+        os.environ.pop("GEMINI_API_KEY", None)
+        return await _llm_analyze(features, behavioral_flags)  # fallback
 
 
 async def analyze_features(features: dict, filename: str = None) -> ThreatAnalysisResponse:
