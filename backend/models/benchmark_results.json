@@ -1,52 +1,40 @@
 {
   "yara_only": {
-    "accuracy": 73.33,
+    "accuracy": 62.67,
     "precision": 100.0,
-    "recall": 52.38,
-    "f1": 68.75,
+    "recall": 36.72,
+    "f1": 53.72,
     "fpr": 0.0,
-    "fnr": 47.62,
-    "tp": 22,
-    "tn": 33,
-    "fp": 0,
-    "fn": 20
+    "fnr": 63.28,
+    "auc": 68.36
   },
   "basic_ml": {
-    "accuracy": 92.0,
-    "precision": 92.86,
-    "recall": 92.86,
-    "f1": 92.86,
-    "fpr": 9.09,
-    "fnr": 7.14,
-    "tp": 39,
-    "tn": 30,
-    "fp": 3,
-    "fn": 3,
-    "auc": 0.9286
+    "accuracy": 94.33,
+    "precision": 95.45,
+    "recall": 94.92,
+    "f1": 95.18,
+    "fpr": 6.5,
+    "fnr": 5.08,
+    "auc": 94.21
   },
   "sentinelx": {
-    "accuracy": 98.67,
-    "precision": 97.67,
-    "recall": 100.0,
-    "f1": 98.82,
-    "fpr": 3.03,
-    "fnr": 0.0,
-    "tp": 42,
-    "tn": 32,
-    "fp": 1,
-    "fn": 0,
-    "auc": 0.9827
+    "accuracy": 94.0,
+    "precision": 94.41,
+    "recall": 95.48,
+    "f1": 94.94,
+    "fpr": 8.13,
+    "fnr": 4.52,
+    "auc": 93.68
   },
-  "dataset_info": {
-    "total_samples": 250,
-    "malware": 150,
-    "benign": 100,
-    "train_size": 175,
-    "test_size": 75,
-    "malware_families": 10,
-    "benign_categories": 10,
-    "packed_malware": 93,
-    "evasive_malware": 33,
-    "features_used": 20
-  }
+  "improvements": {
+    "accuracy_gain_pct": 31.33,
+    "recall_gain_pct": 58.76,
+    "f1_gain_pct": 41.22,
+    "fnr_reduction_pct": 58.76
+  },
+  "cv_f1_mean": 94.44,
+  "cv_f1_std": 0.48,
+  "n_test_samples": 300,
+  "dataset_source": "EMBER-2018-schema (Anderson & Roth 2018, arXiv:1804.04637)",
+  "methodology": "Stratified 70/30 split + 5-fold cross-validation"
 }

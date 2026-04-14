@@ -1,22 +1,122 @@
-{
-  "num_strings": 0.6805883837660763,
-  "num_imports": 0.1934337010329572,
-  "suspicious_string_count": 0.031721458374456675,
-  "num_exports": 0.024607163823473322,
-  "num_sections": 0.023912748712162413,
-  "suspicious_import_count": 0.014558676140814393,
-  "file_entropy": 0.007816951891864786,
-  "network_indicators": 0.00703075941507464,
-  "registry_indicators": 0.00643445883491675,
-  "anti_debug_calls": 0.005830077178128261,
-  "pe_timestamp_anomaly": 0.001625677103122092,
-  "file_size_kb": 0.0012295639048235522,
-  "resource_entropy": 0.0007059186421652749,
-  "section_entropy_avg": 0.0003760808423271283,
-  "high_entropy_sections": 0.0001283803376370925,
-  "import_entropy": 1.7024953730195468e-16,
-  "overlay_ratio": 0.0,
-  "has_packing_artifacts": 0.0,
-  "has_debug_info": 0.0,
-  "has_upx_signature": 0.0
-}
+[
+  {
+    "rank": 1,
+    "feature": "suspicious_string_count",
+    "importance": 0.2541,
+    "description": "Count of strings matching malicious indicators."
+  },
+  {
+    "rank": 2,
+    "feature": "suspicious_import_count",
+    "importance": 0.2529,
+    "description": "Count of imports from known malicious API list."
+  },
+  {
+    "rank": 3,
+    "feature": "network_indicators",
+    "importance": 0.1966,
+    "description": "Count of network-related API and string indicators."
+  },
+  {
+    "rank": 4,
+    "feature": "file_entropy",
+    "importance": 0.043,
+    "description": "Shannon entropy of entire file. >7.0 indicates packing/encryption."
+  },
+  {
+    "rank": 5,
+    "feature": "resource_entropy",
+    "importance": 0.0365,
+    "description": "Entropy of PE resource section. High = encrypted resources."
+  },
+  {
+    "rank": 6,
+    "feature": "import_entropy",
+    "importance": 0.0347,
+    "description": "Entropy of import library names."
+  },
+  {
+    "rank": 7,
+    "feature": "file_size_kb",
+    "importance": 0.031,
+    "description": "File size in kilobytes."
+  },
+  {
+    "rank": 8,
+    "feature": "num_imports",
+    "importance": 0.0298,
+    "description": "Total imported functions across all DLLs."
+  },
+  {
+    "rank": 9,
+    "feature": "num_exports",
+    "importance": 0.0248,
+    "description": "Number of exported functions."
+  },
+  {
+    "rank": 10,
+    "feature": "num_strings",
+    "importance": 0.0225,
+    "description": "Count of printable ASCII strings \u22654 characters."
+  },
+  {
+    "rank": 11,
+    "feature": "section_entropy_avg",
+    "importance": 0.0202,
+    "description": "Mean entropy across all PE sections."
+  },
+  {
+    "rank": 12,
+    "feature": "overlay_ratio",
+    "importance": 0.019,
+    "description": "Proportion of file after last section end. High = appended payload."
+  },
+  {
+    "rank": 13,
+    "feature": "registry_indicators",
+    "importance": 0.0102,
+    "description": "Count of registry manipulation API references."
+  },
+  {
+    "rank": 14,
+    "feature": "num_sections",
+    "importance": 0.0071,
+    "description": "Number of PE sections. Packed files typically have 2\u20133."
+  },
+  {
+    "rank": 15,
+    "feature": "anti_debug_calls",
+    "importance": 0.0057,
+    "description": "Count of anti-debugging API references."
+  },
+  {
+    "rank": 16,
+    "feature": "high_entropy_sections",
+    "importance": 0.0045,
+    "description": "Number of PE sections with entropy > 7.0."
+  },
+  {
+    "rank": 17,
+    "feature": "has_debug_info",
+    "importance": 0.0044,
+    "description": "Binary flag: debug directory present (malware rarely has this)."
+  },
+  {
+    "rank": 18,
+    "feature": "pe_timestamp_anomaly",
+    "importance": 0.0018,
+    "description": "Binary flag: PE header timestamp is zeroed, future-dated, or epoch."
+  },
+  {
+    "rank": 19,
+    "feature": "has_packing_artifacts",
+    "importance": 0.0008,
+    "description": "Binary flag: UPX stub, known packer PE anomalies present."
+  },
+  {
+    "rank": 20,
+    "feature": "has_upx_signature",
+    "importance": 0.0005,
+    "description": "Binary flag: UPX! magic bytes detected."
+  }
+]

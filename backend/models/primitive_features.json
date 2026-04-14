@@ -1,1 +1,7 @@
-["file_entropy", "file_size_kb", "num_sections", "num_imports", "section_entropy_avg"]
+[
+  "file_entropy",
+  "file_size_kb",
+  "num_sections",
+  "num_imports",
+  "section_entropy_avg"
+]

@@ -83,7 +83,10 @@ class ApproachMetrics(BaseModel):
     f1:         float
     fpr:        float
     fnr:        float
-    tp: int; tn: int; fp: int; fn: int
+    tp:         Optional[int] = None
+    tn:         Optional[int] = None
+    fp:         Optional[int] = None
+    fn:         Optional[int] = None
     auc:        Optional[float] = None
 
 class BenchmarkResponse(BaseModel):
@@ -91,7 +94,10 @@ class BenchmarkResponse(BaseModel):
     basic_ml:    ApproachMetrics
     sentinelx:   ApproachMetrics
     improvements: Dict[str, float]
-    dataset_info: Dict[str, Any]
+    dataset_info: Optional[Dict[str, Any]] = None
+    dataset_source: Optional[str] = None
+    n_test_samples: Optional[int] = None
+    methodology: Optional[str] = None
     note: str
 
 # ── Dataset schemas ───────────────────────────────────────────────────────

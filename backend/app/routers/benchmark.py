@@ -45,7 +45,10 @@ async def get_benchmark_results():
         basic_ml=to_metrics(bench["basic_ml"]),
         sentinelx=to_metrics(bench["sentinelx"]),
         improvements=improvements,
-        dataset_info=bench["dataset_info"],
+        dataset_info=bench.get("dataset_info"),
+        dataset_source=bench.get("dataset_source"),
+        n_test_samples=bench.get("n_test_samples"),
+        methodology=bench.get("methodology"),
         note=(
             "Evaluation on n=250 PE feature dataset (175 train / 75 test, stratified). "
             "YARA-Only simulates real-world packed malware evasion (62% of dataset is packed/evasive). "
