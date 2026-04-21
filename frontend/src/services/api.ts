@@ -52,6 +52,11 @@ export const getDatasetSamples = async (page: number = 1, per_page: number = 20,
   return response.data;
 };
 
+export const getMalwareBazaarRecent = async () => {
+  const response = await api.get('/dataset/malwarebazaar');
+  return response.data;
+};
+
 // Model
 export const getModelExplanation = async (): Promise<{ top_features: FeatureImportance[] }> => {
   const response = await api.get('/model/explain');

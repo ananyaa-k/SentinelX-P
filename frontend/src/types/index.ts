@@ -5,11 +5,12 @@ export interface ScanResult {
   confidence_score: number;
   detection_path: string;
   yara_result: { matched: boolean; matched_rules: string[] };
-  llm_analysis: { verdict: string; reasoning: string; behavioral_flags: string[] };
+  llm_analysis: { verdict: string; reasoning: string; behavioral_flags: string[]; suspicious_strings?: string[] };
   generated_yara_rule: string | null;
   recommendation: string;
   processing_time_ms: number;
   ts: string;
+  features_extracted?: Record<string, number>;
 }
 
 export interface BenchmarkMetrics {

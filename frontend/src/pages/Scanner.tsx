@@ -46,7 +46,7 @@ const Scanner: React.FC = () => {
 
   const handleAnalyze = async () => {
     if (!file) return;
-    
+
     setIsAnalyzing(true);
     try {
       const scanResult = await analyzeFile(file);
@@ -73,7 +73,7 @@ const Scanner: React.FC = () => {
 
   const generateReport = () => {
     if (!result) return;
-    
+
     const report = `SENTINELX DEFENDER — SCAN REPORT
 ==================================
 Scan ID:        ${result.scan_id}
@@ -103,7 +103,7 @@ RECOMMENDATION
 --------------
 ${result.recommendation}
 `;
-    
+
     const blob = new Blob([report], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -205,16 +205,15 @@ ${result.recommendation}
                 <div className="p-6 border-b border-[rgba(58,58,56,0.1)]">
                   <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-[#6B6B68] mb-4">CONFIDENCE SCORE</p>
                   <div className="flex items-center gap-8">
-                    <ConfidenceRing 
-                      percentage={result.confidence_score * 100} 
+                    <ConfidenceRing
+                      percentage={result.confidence_score * 100}
                       threatLevel={result.threat_level}
                     />
                     <div>
-                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] ${
-                        result.detection_path === 'YARA_STATIC' 
+                      <div className={`inline-flex items-center gap-2 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] ${result.detection_path === 'YARA_STATIC'
                           ? 'bg-[rgba(255,140,105,0.1)] text-[#FF8C69]'
                           : 'bg-[rgba(244,211,94,0.1)] text-[#F4D35E]'
-                      }`}>
+                        }`}>
                         ▶ PATH {result.detection_path === 'YARA_STATIC' ? 'A' : 'B'} — {
                           result.detection_path === 'YARA_STATIC' ? 'YARA STATIC MATCH' : 'AI HEURISTIC ANALYSIS'
                         }
@@ -230,13 +229,12 @@ ${result.recommendation}
                   {result.llm_analysis.behavioral_flags.length > 0 && (
                     <div className="flex flex-wrap gap-2">
                       {result.llm_analysis.behavioral_flags.map((flag, i) => (
-                        <span 
-                          key={i} 
-                          className={`px-2 py-1 font-mono text-[10px] ${
-                            result.threat_level === 'MALICIOUS' 
+                        <span
+                          key={i}
+                          className={`px-2 py-1 font-mono text-[10px] ${result.threat_level === 'MALICIOUS'
                               ? 'bg-[rgba(255,140,105,0.1)] text-[#FF8C69]'
                               : 'bg-[rgba(244,211,94,0.1)] text-[#F4D35E]'
-                          }`}
+                            }`}
                         >
                           {flag}
                         </span>
@@ -270,16 +268,14 @@ ${result.recommendation}
                 )}
 
                 {/* Section 5 - Recommendation */}
-                <div className={`p-4 ${
-                  result.threat_level === 'MALICIOUS' ? 'bg-[rgba(255,140,105,0.1)]' :
-                  result.threat_level === 'SUSPICIOUS' ? 'bg-[rgba(244,211,94,0.1)]' :
-                  'bg-[rgba(158,255,191,0.1)]'
-                }`}>
-                  <p className={`font-mono text-[12px] ${
-                    result.threat_level === 'MALICIOUS' ? 'text-[#FF8C69]' :
-                    result.threat_level === 'SUSPICIOUS' ? 'text-[#F4D35E]' :
-                    'text-[#1A3C2B]'
+                <div className={`p-4 ${result.threat_level === 'MALICIOUS' ? 'bg-[rgba(255,140,105,0.1)]' :
+                    result.threat_level === 'SUSPICIOUS' ? 'bg-[rgba(244,211,94,0.1)]' :
+                      'bg-[rgba(158,255,191,0.1)]'
                   }`}>
+                  <p className={`font-mono text-[12px] ${result.threat_level === 'MALICIOUS' ? 'text-[#FF8C69]' :
+                      result.threat_level === 'SUSPICIOUS' ? 'text-[#F4D35E]' :
+                        'text-[#1A3C2B]'
+                    }`}>
                     {result.threat_level === 'MALICIOUS' && '🔴 BLOCK — '}
                     {result.threat_level === 'SUSPICIOUS' && '🟡 QUARANTINE — '}
                     {result.threat_level === 'SAFE' && '🟢 CLEAR — '}

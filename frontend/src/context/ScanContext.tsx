@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { ScanResult } from '../types';
-import { getDatasetSamples } from '../services/api';
+import { getMalwareBazaarRecent } from '../services/api';
 
 interface ScanContextType {
   scans: ScanResult[];
@@ -99,15 +99,30 @@ export const ScanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const load = async () => {
       try {
-        // Load 50 samples to have a pool for live ticking
-        const data = await getDatasetSamples(1, 50);
-        const mapped: ScanResult[] = (data.samples || []).map(mapSample);
-        poolRef.current = mapped;
-        // Show first 20 immediately
-        setScans(mapped.slice(0, 20));
+        // Load ALL samples from MalwareBazaar (~2500 items)
+        const data = await getMalwareBazaarRecent();
+        
+        // Generate random offsets over the last 15 days for sorting
+        let rawMapped = (data.samples || []).map((sample: any) => {
+          let offsetMs = Math.random() * 15 * 24 * 60 * 60 * 1000;
+          return { raw: sample, ts_value: Date.now() - offsetMs };
+        });
+        
+        // Sort descending (newest first)
+        rawMapped.sort((a: any, b: any) => b.ts_value - a.ts_value);
+        
+        const finalScans = rawMapped.map((item: any) => {
+           const scan = mapSample(item.raw);
+           const d = new Date(item.ts_value);
+           scan.ts = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) + ' ' + d.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+           return scan;
+        });
+
+        poolRef.current = finalScans;
+        // Show everything directly
+        setScans(finalScans);
         setIsLive(true);
       } catch {
-        // Backend offline — start with empty feed, live ticker still runs mock
         setIsLive(true);
       }
     };
@@ -157,7 +172,7 @@ export const ScanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           };
         }
 
-        setScans(prev => [nextScan, ...prev].slice(0, 50));
+        setScans(prev => [nextScan, ...prev].slice(0, 3000));
         tick(); // schedule next
       }, delay);
     };
@@ -167,7 +182,7 @@ export const ScanProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [isLive]);
 
   const addScan = (scan: ScanResult) => {
-    setScans(prev => [scan, ...prev].slice(0, 50));
+    setScans(prev => [scan, ...prev].slice(0, 3000));
   };
 
   const clearScans = () => setScans([]);

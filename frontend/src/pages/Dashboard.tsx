@@ -8,9 +8,9 @@ const Dashboard: React.FC = () => {
   const { scans } = useScanContext();
 
   const stats = [
-    { value: '250', label: 'SAMPLES ANALYZED', borderColor: 'border-l-coral' },
-    { value: '98.67%', label: 'DETECTION ACCURACY', borderColor: 'border-l-mint' },
-    { value: '0%', label: 'FALSE NEGATIVE RATE', borderColor: 'border-l-mint' },
+    { value: '1000', label: 'EMBER SAMPLES', borderColor: 'border-l-coral' },
+    { value: '94.33%', label: 'DETECTION ACCURACY', borderColor: 'border-l-mint' },
+    { value: '4.52%', label: 'FALSE NEGATIVE RATE', borderColor: 'border-l-mint' },
     { value: '10', label: 'MALWARE FAMILIES', borderColor: 'border-l-gold' },
   ];
 
