@@ -19,6 +19,7 @@ rule SentinelX_Ransomware_WannaCry {
         description = "WannaCry ransomware — EternalBlue propagation variant"
         family      = "Ransomware.WannaCry"
         severity    = "CRITICAL"
+        mitre       = "T1486,T1490,T1210"
         author      = "SentinelX Engine"
     strings:
         $s1 = "WannaDecryptor" ascii wide
@@ -38,6 +39,7 @@ rule SentinelX_Ransomware_LockBit {
         description = "LockBit 2.0/3.0 ransomware indicators"
         family      = "Ransomware.LockBit"
         severity    = "CRITICAL"
+        mitre       = "T1486,T1490"
     strings:
         $s1 = "LockBit" ascii
         $s2 = "Restore-My-Files.txt" ascii
@@ -55,6 +57,7 @@ rule SentinelX_Trojan_AgentTesla {
         description = "AgentTesla infostealer — keylogger + credential theft"
         family      = "Trojan.AgentTesla"
         severity    = "HIGH"
+        mitre       = "T1555,T1056.001,T1071.001"
     strings:
         $s1 = "AgentTesla" ascii
         $s2 = "SmtpClient" ascii
@@ -70,6 +73,7 @@ rule SentinelX_RAT_AsyncRAT {
         description = "AsyncRAT — open-source remote access trojan"
         family      = "RAT.AsyncRAT"
         severity    = "HIGH"
+        mitre       = "T1219,T1071.001"
     strings:
         $s1 = "AsyncRAT" ascii
         $s2 = "Pastebin" ascii
@@ -86,6 +90,7 @@ rule SentinelX_Dropper_GuLoader {
         description = "GuLoader shellcode dropper — NSIS-based"
         family      = "Dropper.GuLoader"
         severity    = "HIGH"
+        mitre       = "T1105,T1055"
     strings:
         $s1 = "GuLoader" ascii
         $shell = { 60 89 E5 31 D2 64 8B 52 30 }   // shellcode stub
@@ -101,6 +106,7 @@ rule SentinelX_AntiDebug_Evasion {
     meta:
         description = "Anti-debugging and anti-analysis techniques"
         severity    = "MEDIUM"
+        mitre       = "T1622"
     strings:
         $d1 = "IsDebuggerPresent" ascii
         $d2 = "CheckRemoteDebuggerPresent" ascii
@@ -116,6 +122,7 @@ rule SentinelX_Generic_HighEntropy_Packed {
     meta:
         description = "Generic packed/encrypted executable — high entropy"
         severity    = "MEDIUM"
+        mitre       = "T1027.002,T1027"
         note        = "Requires LLM heuristic analysis (Path B)"
     strings:
         $upx1 = "UPX!" ascii
@@ -132,6 +139,7 @@ rule SentinelX_Network_Downloader {
     meta:
         description = "Suspicious network downloader / dropper"
         severity    = "HIGH"
+        mitre       = "T1105,T1071.001"
     strings:
         $n1 = "URLDownloadToFile" ascii
         $n2 = "InternetOpen" ascii
@@ -150,6 +158,7 @@ rule SentinelX_Infostealer_Clipboard {
         description = "Clipboard / credential stealer indicators"
         family      = "Infostealer"
         severity    = "HIGH"
+        mitre       = "T1115,T1555"
     strings:
         $c1 = "GetClipboardData" ascii
         $c2 = "CryptUnprotectData" ascii  // DPAPI credential theft

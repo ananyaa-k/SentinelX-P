@@ -1,6 +1,10 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 from enum import Enum
+from pydantic import field_validator
+import re
+
+MITRE_ID_RE = re.compile(r"^T\d{4}(?:\.\d{3})?$")
 
 # ── Enums ─────────────────────────────────────────────────────────────────
 class ThreatLevel(str, Enum):
@@ -61,6 +65,15 @@ class LLMAnalysis(BaseModel):
     reasoning:        str
     suspicious_strings: List[str]
     behavioral_flags: List[str]
+    mitre_techniques: List[str] = Field(default_factory=list)
+
+    @field_validator('mitre_techniques')
+    @classmethod
+    def validate_mitre_techniques(cls, v: List[str]) -> List[str]:
+        for tech in v:
+            if not MITRE_ID_RE.match(tech):
+                raise ValueError(f"Invalid MITRE ID format: {tech}")
+        return v
 
 class ThreatAnalysisResponse(BaseModel):
     scan_id:          str
@@ -74,6 +87,15 @@ class ThreatAnalysisResponse(BaseModel):
     processing_time_ms:  float
     features_extracted:  Dict[str, Any]
     recommendation:   str
+    mitre_techniques: List[str] = Field(default_factory=list)
+
+    @field_validator('mitre_techniques')
+    @classmethod
+    def validate_mitre_techniques(cls, v: List[str]) -> List[str]:
+        for tech in v:
+            if not MITRE_ID_RE.match(tech):
+                raise ValueError(f"Invalid MITRE ID format: {tech}")
+        return v
 
 # ── Benchmark schemas ─────────────────────────────────────────────────────
 class ApproachMetrics(BaseModel):

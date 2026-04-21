@@ -25,6 +25,20 @@ from app.schemas import (
 
 logger = logging.getLogger(__name__)
 
+# ── Load MITRE Mappings Safely ──────────────────────────────────────────────
+def _load_mitre_mappings():
+    try:
+        mapping_path = os.path.join(os.path.dirname(__file__), "..", "..", "rules", "mitre_mappings.json")
+        with open(mapping_path, "r", encoding='utf-8') as f:
+            data = json.load(f)
+            return data.get("techniques", {})
+    except Exception as e:
+        logger.warning(f"Failed to load MITRE mappings. Mitre enrichment will be skipped: {e}")
+        return {}
+
+MITRE_MAPPINGS = _load_mitre_mappings()
+
+
 # ── Feature descriptions (for LLM prompt construction) ────────────────────
 FEATURE_DESCRIPTIONS = {
     "file_entropy":           "Shannon entropy (high = packed/encrypted)",
@@ -54,23 +68,28 @@ SUSPICIOUS_IMPORTS_MAP = {
 YARA_RULES = {
     "WannaCry_ransomware": {
         "strings": ["WannaCry", "wncry", ".WNCRY", "WannaDecryptor"],
-        "description": "WannaCry ransomware variant"
+        "description": "WannaCry ransomware variant",
+        "mitre": ["T1486", "T1490", "T1210"]
     },
     "Emotet_dropper": {
         "strings": ["Emotet", "loader.dll", "epoch"],
-        "description": "Emotet dropper/loader"
+        "description": "Emotet dropper/loader",
+        "mitre": ["T1027"]
     },
     "Generic_packer_UPX": {
         "strings": ["UPX!", "UPX0", "UPX1"],
-        "description": "UPX-packed executable"
+        "description": "UPX-packed executable",
+        "mitre": ["T1027.002", "T1027"]
     },
     "Suspicious_network_beacon": {
         "strings": ["InternetOpenUrl", "HttpSendRequest", "URLDownloadToFile"],
-        "description": "Network beacon / downloader activity"
+        "description": "Network beacon / downloader activity",
+        "mitre": ["T1105", "T1071.001"]
     },
     "AntiDebug_evasion": {
         "strings": ["IsDebuggerPresent", "CheckRemoteDebuggerPresent", "NtQueryInformationProcess"],
-        "description": "Anti-debugging evasion techniques"
+        "description": "Anti-debugging evasion techniques",
+        "mitre": ["T1622"]
     },
 }
 
@@ -154,7 +173,8 @@ async def _llm_analyze(features: dict, behavioral_flags: list) -> LLMAnalysis:
             verdict=verdict,
             reasoning=reasoning,
             suspicious_strings=suspicious_strings,
-            behavioral_flags=behavioral_flags
+            behavioral_flags=behavioral_flags,
+            mitre_techniques=[]
         )
 
     # Gemini API call
@@ -174,7 +194,8 @@ Respond ONLY as JSON:
   "verdict": "MALICIOUS" | "SUSPICIOUS" | "SAFE",
   "reasoning": "2-3 sentence explanation of key indicators",
   "suspicious_strings": ["list", "of", "flagged", "imports"],
-  "behavioral_flags": ["summarized", "flags"]
+  "behavioral_flags": ["summarized", "flags"],
+  "mitre_techniques": ["T1027", "T1486"]
 }}"""
 
     try:
@@ -255,6 +276,15 @@ async def analyze_features(features: dict, filename: str = None) -> ThreatAnalys
         ThreatLevel.SAFE:       "🟢 File appears benign. Continue with standard monitoring.",
     }[threat_level]
 
+    # ── Aggregate MITRE Techniques ────────────────────────────────────────
+    aggregated_mitre = list(llm_analysis.mitre_techniques)
+    for rule in yara_rules:
+        if rule in YARA_RULES and "mitre" in YARA_RULES[rule]:
+            aggregated_mitre.extend(YARA_RULES[rule]["mitre"])
+    
+    # Remove duplicates but keep elements that exist in mapping or are formally valid
+    final_mitre = list(set(aggregated_mitre))
+
     return ThreatAnalysisResponse(
         scan_id=scan_id,
         filename=filename,
@@ -266,7 +296,8 @@ async def analyze_features(features: dict, filename: str = None) -> ThreatAnalys
         generated_yara_rule=generated_rule,
         processing_time_ms=round((time.time() - t0) * 1000, 2),
         features_extracted=features,
-        recommendation=recommendation
+        recommendation=recommendation,
+        mitre_techniques=final_mitre
     )
 
 
